@@ -63,6 +63,8 @@ import { useLazyRetrieveQuery } from "@/app/api/ai/ai-api-slice";
 import { MovieCard } from "@/components/custom/movie-card";
 import dayjs from "dayjs";
 import DefaultImage from "@/components/custom/default-image";
+import GenreBadge from "@/components/custom/genre-badge";
+import KeywordBadge from "@/components/custom/keyword-badge";
 const languageMap: { [key: string]: string } = {
   en: "English",
   vn: "Vietnamese",
@@ -380,9 +382,11 @@ const MovieDetail = () => {
     toast({
       title: "Error",
       variant: "destructive",
-      description: `Error when added rating for ${movie?.title} 😰. ${!isAuthenticated ? "Please log in to use this feature." : ""}`,
+      description: `Error when added rating for ${movie?.title} 😰. ${
+        !isAuthenticated ? "Please log in to use this feature." : ""
+      }`,
     });
-  });
+  }, [isAddRatingError, movie?.title, isAuthenticated]);
 
   useEffect(() => {
     if (!isAddRatingSuccess) {
@@ -393,7 +397,7 @@ const MovieDetail = () => {
       title: "Success",
       description: `Added rating for ${movie?.title}`,
     });
-  }, [isAddRatingSuccess]);
+  }, [isAddRatingSuccess, movie?.title, getAverageRating, id]);
 
   useEffect(() => {
     if (!isGetReviewSuccess) {
@@ -427,7 +431,7 @@ const MovieDetail = () => {
       title: "Success",
       description: `Added review for ${movie?.title}`,
     });
-  }, [isAddReviewgSuccess]);
+  }, [isAddReviewgSuccess, movie, getLatestReviews]);
 
   useEffect(() => {
     if (!isEditReviewError) {
@@ -450,7 +454,7 @@ const MovieDetail = () => {
       title: "Success",
       description: `Edited review for ${movie?.title}`,
     });
-  }, [isEditReviewSuccess]);
+  }, [isEditReviewSuccess, movie, getLatestReviews]);
 
   useEffect(() => {
     if (!isDeleteReviewError) {
@@ -473,7 +477,7 @@ const MovieDetail = () => {
       title: "Success",
       description: `Deleted review for ${movie?.title}`,
     });
-  }, [isDeleteReviewSuccess]);
+  }, [isDeleteReviewSuccess, movie, getLatestReviews]);
   
   useLayoutEffect(() => {
     if (hash == "cast" && castSectionRef.current) {
@@ -481,7 +485,7 @@ const MovieDetail = () => {
         behavior: "smooth",
       });
     }
-  }, [isLoading, movie]);
+  }, [isLoading, movie, hash]);
 
   if (isLoading) return <FallbackScreen />;
   if (error) return <div className="flex p-4 justify-center">{error}</div>;
@@ -489,59 +493,52 @@ const MovieDetail = () => {
     return <div className="flex p-4 justify-center">Movie not found</div>;
 
   return (
-    <div className="min-h-screen flex flex-col text-white">
+    <div className="min-h-screen flex flex-col text-primary">
       <Helmet>
         <title>Move details - ${movie.title}</title>
       </Helmet>
       <div
-        className="relative h-[600px] bg-cover bg-center flex items-center"
+        className="relative md:max-h-[600px] bg-cover bg-center flex items-center"
         style={{
           backgroundImage: `url(${getResourceFromTmdb(
             movie.backdrop_path || movie.poster_path
           )})`,
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-12 flex gap-8 text-white">
-          <div className="w-1/3">
+        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-center gap-8 text-white">
+          <div className="w-2/3 md:w-1/3 flex justify-center">
             {movie.poster_path ? (
               <img
                 src={getResourceFromTmdb(movie.poster_path)}
                 alt={movie.title}
-                className="w-full h-auto rounded-lg shadow-lg"
+                className="h-auto rounded-lg shadow-lg"
               />
             ) : (
               <DefaultImage
                 alt={movie.title}
-                className="w-52 h-72 rounded-lg shadow-lg"
+                className="w-48 md:w-56 h-60 md:h-72 rounded-lg shadow-lg"
               />
             )}
           </div>
 
-          <div className="w-2/3">
-            <div className="flex justify-between items-center">
-              <h1 className="text-5xl font-bold">{movie.title}</h1>
-            </div>
-            <span className="text-lg">
+          <div className="md:w-2/3">
+            <p className="text-3xl md:text-5xl font-bold text-center md:text-start">
+              {movie.title}
+            </p>
+            <p className="text-center md:text-start md:text-lg">
               {movie.release_date
                 ? dayjs(movie.release_date).format("MMM DD YYYY")
                 : ""}
-            </span>
-            <div className="flex gap-4 flex-wrap mt-4">
+            </p>
+            <div className="flex gap-2 flex-wrap mt-4">
               {movie.genres?.map((genre) => (
-                <span
-                  key={genre.id}
-                  className="bg-gray-700 px-4 py-1 rounded-full text-sm"
-                >
-                  {genre.name}
-                </span>
+                <GenreBadge key={genre.id} genre={genre} />
               ))}
             </div>
-            <div className="flex items-center gap-6 mt-6">
+            <div className="flex items-center gap-4 mt-6">
               <div className="flex items-center gap-2">
-                <div className="bg-gray-800 text-white w-12 h-12 rounded-full flex justify-center items-center">
-                  <RatingIndicator rating={averageRating} />
-                </div>
+                <RatingIndicator rating={averageRating} />
               </div>
               {
                 <RatingPicker
@@ -553,7 +550,7 @@ const MovieDetail = () => {
                   <Tooltip>
                     <TooltipTrigger>
                       <Button
-                        className="bg-gray-rose-gradient text-white px-4 py-4 rounded-full text-sm hover:scale-105"
+                        className="bg-gray-rose-gradient-light dark:bg-gray-rose-gradient text-primary px-4 py-4 rounded-full text-sm hover:scale-105 transition duration-200"
                         onClick={onRatingBtnClick}
                         onDoubleClick={onRatingBtnDoubleClick}
                       >
@@ -584,13 +581,13 @@ const MovieDetail = () => {
                 </RatingPicker>
               }
             </div>
-            <div className="flex gap-4 mt-6 text-white">
+            <div className="flex gap-4 mt-6">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <AddMovieToPlaylistDialog movieId={movie.id}>
                     <Button
                       size="icon"
-                      className="bg-gray-800 rounded-full text-white hover:bg-background hover:text-sky-500"
+                      className="bg-gray-700 rounded-full text-white hover:bg-background hover:text-sky-500"
                     >
                       <Bookmark />
                     </Button>
@@ -608,7 +605,7 @@ const MovieDetail = () => {
                 <TooltipTrigger asChild>
                   <Button
                     size="icon"
-                    className="bg-gray-800 rounded-full text-white hover:bg-background hover:text-pink-500"
+                    className="bg-gray-700 rounded-full text-white hover:bg-background hover:text-pink-500"
                     onClick={onLikeMovieClick}
                   >
                     {isLiked ? (
@@ -632,7 +629,7 @@ const MovieDetail = () => {
                 <TooltipTrigger asChild>
                   <Button
                     size="icon"
-                    className="bg-gray-800 rounded-full text-white hover:bg-background hover:text-green-500"
+                    className="bg-gray-700 rounded-full text-white hover:bg-background hover:text-green-500"
                     onClick={onAddWatchListClick}
                   >
                     {!isInWatchLaterList ? (
@@ -657,7 +654,7 @@ const MovieDetail = () => {
                   <TooltipTrigger asChild>
                     <Button
                       size="icon"
-                      className="bg-blue-500 rounded-full text-white hover:bg-blue-500 hover:bg-opacity-80"
+                      className="bg-blue-500 rounded-full hover:bg-blue-500 hover:bg-opacity-80"
                       onClick={onPlayTrailerClick}
                     >
                       <Play />
@@ -675,18 +672,19 @@ const MovieDetail = () => {
         </div>
       </div>
 
-      <div className="flex flex-1 w-full p-2 mx-auto mt-6 gap-6">
+      <div className="flex flex-col-reverse md:flex-row w-full p-2 mx-auto mt-6 gap-6">
+        {/* Cast section */}
         <div
-          className="w-3/4 px-4 flex flex-col space-y-8"
+          className="md:w-3/4 px-4 flex flex-col space-y-8"
           ref={castSectionRef}
         >
-          <div className="px-2">
+          <div>
             <div className="flex items-center space-x-2 font-semibold">
-              <span className="w-1 h-8 bg-rose-600"></span>
-              <span className="text-xl text-white">Casts</span>
+              <span className="w-1 h-8 bg-key"></span>
+              <span className="text-xl text-primary">Casts</span>
             </div>
             <ScrollArea className="w-full overflow-x-auto">
-              <div className="flex gap-4 py-6">
+              <div className="flex gap-4 py-4">
                 {isMovieCastLoading &&
                   new Array(10).fill(null).map((_, idx) => {
                     return <MovieCardSkeleton key={idx} />;
@@ -709,7 +707,7 @@ const MovieDetail = () => {
           </div>
 
           {/* Review */}
-          <div className="p-2">
+          <div>
             <div className="flex justify-between items-center">
               <div
                 className="flex items-center space-x-2 font-semibold"
@@ -717,16 +715,16 @@ const MovieDetail = () => {
                   navigate(`/movie/${movie.id}/reviews`);
                 }}
               >
-                <span className="w-1 h-8 bg-rose-600"></span>
-                <span className="text-xl text-white hover:text-rose-600 cursor-pointer hover:transition-colors">
-                  User reviews {`(${totalReview ? totalReview : 0})`}
+                <span className="w-1 h-8 bg-key"></span>
+                <span className="text-xl text-primary hover:text-key cursor-pointer hover:transition-colors">
+                  Reviews {`(${totalReview ? totalReview : 0})`}
                 </span>
               </div>
 
               <DialogEditor
                 triggerElement={
-                  <Button className="text-gray-200 rounded-full bg-rose-900 hover:bg-rose-800 hover:text-white py-2 px-4">
-                    Add New Review
+                  <Button className="rounded-full hover:bg-keysecondary hover:text-keysecondary-foreground transition duration-200 py-2 px-4">
+                    Add Review
                   </Button>
                 }
                 open={openAddReviewDialog}
@@ -752,7 +750,7 @@ const MovieDetail = () => {
               )}
             </div>
             <Button
-              className="w-full border text-gray-300 rounded-full bg-transparent hover:bg-rose-900 hover:text-gray-200 transition-all duration-200"
+              className="w-full border text-secondary-foreground rounded-full bg-transparent hover:bg-keysecondary hover:text-primary transition-all duration-200"
               onClick={() => {
                 navigate(`/movie/${movie.id}/reviews`);
               }}
@@ -761,23 +759,19 @@ const MovieDetail = () => {
             </Button>
           </div>
 
-          <div className="ml-2">
+          {/* Recommendation */}
+          <div>
             <div className="flex items-center space-x-2 font-semibold mb-2">
-              <span className="w-1 h-8 bg-rose-600"></span>
-              <span className="text-xl text-white">Recommendations</span>
+              <span className="w-1 h-8 bg-key"></span>
+              <span className="text-xl text-primary">Recommendations</span>
             </div>
             <div className="px-2 max-w-[1000px] mx-auto">
               <div className="flex items-center space-x-6">
                 <h4 className="text-lg whitespace-nowrap">
                   <b>Based on this movie's genres</b>
-                  <div className="flex gap-4 flex-wrap mt-4">
+                  <div className="flex gap-2 flex-wrap mt-4">
                     {movie.genres?.map((genre) => (
-                      <span
-                        key={genre.id}
-                        className="bg-gray-700 px-4 py-1 rounded-full text-sm"
-                      >
-                        {genre.name}
-                      </span>
+                      <GenreBadge key={genre.id} genre={genre} />
                     ))}
                   </div>
                 </h4>
@@ -847,40 +841,38 @@ const MovieDetail = () => {
         </div>
 
         {/* Right Column */}
-        <div className="w-1/4 pl-4">
-          <p className="mb-2">
-            <strong>Status:</strong>
-            <p>{movie.status}</p>
-          </p>
-          <p className="mb-2">
-            <strong>Original Language:</strong>
+        <div className="md:w-1/4 px-4 flex flex-row space-x-6 space-y-0 md:flex-col md:space-x-0 md:space-y-6">
+          <div className="flex flex-col gap-4">
             <p>
-              {languageMap[movie.original_language] || movie.original_language}
+              <strong>Status:</strong>
+              <p>{movie.status}</p>
             </p>
-          </p>
-          <p className="mb-2">
-            <strong>Budget:</strong>
-            <p>${movie.budget.toLocaleString()}</p>
-          </p>
-          <p className="mb-2">
-            <strong>Revenue:</strong>
-            <p>${movie.revenue.toLocaleString()}</p>
-          </p>
-          <div className="mt-4">
+            <p>
+              <strong>Original Language:</strong>
+              <p>
+                {languageMap[movie.original_language] ||
+                  movie.original_language}
+              </p>
+            </p>
+            <p>
+              <strong>Budget:</strong>
+              <p>${movie.budget.toLocaleString()}</p>
+            </p>
+            <p>
+              <strong>Revenue:</strong>
+              <p>${movie.revenue.toLocaleString()}</p>
+            </p>
+          </div>
+          <div>
             <h3 className="font-semibold mb-2">Keywords</h3>
             {movieKeywords.length > 0 ? (
               <div className="flex flex-wrap gap-2">
-                {movieKeywords.map((keyword: any) => (
-                  <span
-                    key={keyword.id}
-                    className="bg-gray-700 px-3 py-1 rounded-full text-sm"
-                  >
-                    {keyword.name}
-                  </span>
+                {movieKeywords.map((keyword: MovieKeywords) => (
+                  <KeywordBadge key={keyword.id} keyword={keyword} />
                 ))}
               </div>
             ) : (
-              <div> Loading....</div>
+              <p>None</p>
             )}
           </div>
         </div>

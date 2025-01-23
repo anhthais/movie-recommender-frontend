@@ -7,6 +7,7 @@ import { ThreeDotsVertical } from "react-bootstrap-icons";
 import MovieActionPopover from "./movie-action-popover";
 import { useMovieDetailQuery } from "@/app/api/movies/movie-api-slice";
 import { ratingScore } from "./rating-picker";
+import dayjs from "dayjs";
 
 export enum CardViewLayout {
   GRID = 'grid',
@@ -45,8 +46,8 @@ export const PlayListMovieCard = (props: PlaylistMovieCardProps) => {
     };
     
     return (
-        <div className={`rounded-lg overflow-hidden cursor-pointer shrink-0 justify-self-center ${isGridView ? 'flex flex-col w-40' : 'flex w-full gap-8 bg-gray-rose-gradient h-[135px]'}`} onClick={onClick}>
-          <div className={`relative group shrink-0 ${isGridView ? 'w-40 h-[15rem]' : 'w-[240px]'}`}>
+        <div className={`rounded-lg overflow-hidden cursor-pointer shrink-0 justify-self-center ${isGridView ? 'flex flex-col w-32 md:w-40' : 'flex w-full gap-4 bg-gray-rose-gradient-light dark:bg-gray-rose-gradient h-[135px]'}`} onClick={onClick}>
+          <div className={`relative group shrink-0 ${isGridView ? 'w-32 md:w-40 h-[12rem] md:h-[15rem]' : 'w-[240px]'}`}>
               <img 
                 src={movie?.poster_path 
                   ? getResourceFromTmdb(
@@ -56,22 +57,22 @@ export const PlayListMovieCard = (props: PlaylistMovieCardProps) => {
                 className={`${!loaded ? 'opacity-0' : 'group-hover:blur-sm'} rounded-lg`}/>
               {!loaded && <Skeleton className="top-0 absolute bottom-0 right-0 left-0 opacity-100" />}
               <MovieActionPopover movieId={movieId}>
-                  <Button variant="ghost" size="icon" className="rounded-full shrink-0 absolute top-2 right-2" onClick={onMoreClick}>
+                  <Button variant="ghost" size="icon" className="rounded-full shrink-0 absolute top-2 right-2 text-white" onClick={onMoreClick}>
                       <ThreeDotsVertical />
                   </Button>
               </MovieActionPopover>
           </div>
-          <div className="mt-2 flex flex-col pr-6 gap-0.5">
+          <div className="mt-2 flex flex-col px-1 gap-0.5">
               <span className="font-semibold text-ellipsis line-clamp-1">{movie?.original_title}</span>
-              <span className="text-sm">{movie?.release_date}</span>
+              <span className="text-sm text-primary/80">{dayjs(movie?.release_date).format("MMM DD YYYY")}</span>
               <p className={`line-clamp-2 text-sm ${isGridView ? 'text-xs' : ''}`}>
                 {movie?.overview}
               </p>
               {
                 rating && (
-                  <div className="text-xs mt-1">
+                  <p className="text-xs mt-1 bg-secondary/80 rounded-full py-1 text-center">
                     You felt {ratingScore[rating as keyof typeof ratingScore].title} {ratingScore[rating as keyof typeof ratingScore].emoji}
-                  </div>
+                  </p>
                 )
               }
           </div>

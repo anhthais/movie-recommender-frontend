@@ -49,7 +49,7 @@ export const TrailerCard = (props: MovieCardProps) => {
                         <ThreeDotsVertical />
                     </Button>
                 </MovieActionPopover>
-                <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 group-hover:text-red-700">
+                <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 group-hover:text-destructive">
                   <PlayFill className="text-5xl"/>
                 </div>
             </div>

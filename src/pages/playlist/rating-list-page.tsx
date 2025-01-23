@@ -59,7 +59,7 @@ const RatingListPage = () => {
             )
             : (
               <div className="px-6 py-4 flex items-center gap-32">
-                {ratingsData?.data && ratingsData.data.length > 0 && <div className={`px-6 grid mt-8 gap-8 w-full ${cardViewLayout === CardViewLayout.GRID ? 'max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 grid-cols-5' : ''}`}>
+                {ratingsData?.data && ratingsData.data.length > 0 && <div className={`grid mt-4 gap-8 w-full ${cardViewLayout === CardViewLayout.GRID ? 'max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 grid-cols-5' : ''}`}>
                   {
                     (isReversed ? [...ratingsData.data].reverse() : ratingsData.data).map((movie) => (
                         <PlayListMovieCard

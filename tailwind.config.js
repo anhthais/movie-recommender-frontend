@@ -32,6 +32,14 @@ export default {
   				DEFAULT: 'hsl(var(--secondary))',
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
+				key: {
+					DEFAULT: 'hsl(var(--key))',
+					foreground: 'hsl(var(--key-foreground))'
+				},
+				keysecondary: {
+					DEFAULT: 'hsl(var(--keysecondary))',
+					foreground: 'hsl(var(--keysecondary-foreground))'
+				},
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'
@@ -57,7 +65,8 @@ export default {
   		},
 			backgroundImage: {
 				'discover-bg': "url('https://hips.hearstapps.com/hmg-prod/images/spiderman-cruzando-el-multiverso-pelicula-estreno-647b17a4c14ca.jpg?crop=1xw:1xh;center,top&resize=1200😘')",
-				'gray-rose-gradient': 'linear-gradient(235deg, rgb(17, 24, 39) 40%,rgb(43, 18, 30) 99%)'
+				'gray-rose-gradient': 'linear-gradient(235deg, rgb(17, 24, 39) 40%,rgb(43, 18, 30) 99%)',
+				'gray-rose-gradient-light': 'linear-gradient(235deg, rgb(243, 244, 260) 40%, rgb(252, 231, 250) 99%)'
 			},
 			keyframes: {
 				"accordion-down": {

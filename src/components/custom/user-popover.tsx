@@ -7,9 +7,8 @@ import {
 import { useAuthentication } from "@/hooks/use-authentication";
 import { useTopBarLoader } from "@/hooks/use-top-loader";
 import { delay } from "@/lib/helpers/delay";
-import { LogOut } from "lucide-react";
 import { ReactNode } from "react";
-import { Bookmark, Heart, Star, Tv } from "react-bootstrap-icons";
+import { Bookmark, Heart, Star, Tv, BoxArrowRight } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +27,7 @@ export type PopoverItemProps = {
 
 export const PopoverItem = ({children, canClick = true, onClick} : PopoverItemProps) => {
     return (
-        <div className={`${canClick ? 'hover:bg-primary/20 cursor-pointer' : ''} rounded-md py-2 px-4`} onClick={onClick}>
+        <div className={`${canClick ? 'hover:bg-primary/20 hover:scale-105 transition-all duration-200 cursor-pointer' : ''} rounded-md py-2 px-4`} onClick={onClick}>
             {children}
         </div>
     )
@@ -74,7 +73,7 @@ export const UserPopover = (props: UserPopoverProps) => {
       <PopoverTrigger asChild>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-64 text-sm" sideOffset={10}>
+      <PopoverContent className="w-64 text-sm bg-background/90" sideOffset={10}>
         <div className="grid gap-2">
             <PopoverItem>
                 <p className="font-semibold mb-2">{user.authentication.username}</p>
@@ -106,7 +105,7 @@ export const UserPopover = (props: UserPopoverProps) => {
             </PopoverItem>
             <PopoverItem onClick={onLogoutClick}>
                 <div className="flex gap-6 items-center">
-                    <LogOut className="size-5" />
+                    <BoxArrowRight className="size-5" />
                     <span className="font-semibold">Logout</span>
                 </div>
             </PopoverItem>

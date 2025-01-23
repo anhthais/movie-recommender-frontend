@@ -69,7 +69,7 @@ const CustomPagination: React.FC<PaginationProps> = ({
   const pages = getPageNumbers();
 
   return (
-    <Pagination>
+    <Pagination className="scale-75 sm:scale-100">
       <PaginationContent>
         <PaginationItem onClick={() => onPageChange(Math.max(currentPage - 1, 1))} className={`${currentPage === 1  ? 'pointer-events-none hover:bg-inherit' : 'cursor-pointer'}`}>
           <PaginationPrevious/>
@@ -77,7 +77,7 @@ const CustomPagination: React.FC<PaginationProps> = ({
         {pages.map((page, index) =>
           typeof page === "number" ? (
             <PaginationItem key={index} onClick={() => onPageChange(page)} className="cursor-pointer">
-              <PaginationLink  isActive={ page === currentPage }>{page}</PaginationLink>
+              <PaginationLink isActive={ page === currentPage }>{page}</PaginationLink>
             </PaginationItem>
           ) : (
             <PaginationItem key={index}>

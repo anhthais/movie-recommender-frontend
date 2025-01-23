@@ -134,8 +134,10 @@ const Homepage = () => {
         <section className="px-8 flex justify-center w-full bg-discover-bg bg-no-repeat py-8 bg-black bg-center relative bg-cover">
           <div className="absolute inset-0 bg-black opacity-35 z-10"></div>
           <div className="max-w-[1300px] z-20">
-            <h3 className="text-4xl font-semibold">Welcome to TMDB</h3>
-            <p className="text-2xl font-medium mt-2">
+            <h3 className="text-4xl font-semibold text-white">
+              Welcome to TMDB
+            </h3>
+            <p className="text-2xl font-medium mt-2 text-white">
               Millions of movies, TV shows and people to discover. Explore now.
             </p>
 
@@ -147,34 +149,42 @@ const Homepage = () => {
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 onFocus={onSearchInputFocus}
                 onBlur={onSearchInputBlur}
+                value={searchQuery}
               />
-              <Search 
-                    className="text-white cursor-pointer absolute top-3 end-5" 
-                    onClick={handleSearch}/>
+              <Search
+                className="text-primary cursor-pointer absolute top-3 end-5"
+                onClick={handleSearch}
+              />
 
-              {
-                searchKeywords.length > 0 &&
-                <div className={`absolute bg-no-repeat bg-background w-full top-[110%] px-4 py-4 rounded-2xl border ${!showSearchSuggestions ? 'hidden' : ''}`}>
-                <ul>
-                  {
-                    searchKeywords.map((keyword) => (
-                      <li key={keyword.id} className="w-full px-6 py-2 cursor-pointer hover:bg-accent rounded-xl" onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        onSearchSuggestionClick(keyword.name)}}>
+              {searchKeywords.length > 0 && (
+                <div
+                  className={`absolute bg-no-repeat bg-background/85 w-full top-[110%] px-4 py-4 rounded-2xl border ${
+                    !showSearchSuggestions ? "hidden" : ""
+                  }`}
+                >
+                  <ul>
+                    {searchKeywords.map((keyword) => (
+                      <li
+                        key={keyword.id}
+                        className="w-full px-4 py-2 cursor-pointer hover:bg-primary/30 hover:transform hover:scale-105 duration-200 rounded-xl"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          onSearchSuggestionClick(keyword.name);
+                        }}
+                      >
                         {keyword.name}
                       </li>
-                    ))
-                  }
-                </ul>
-              </div>
-              }
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </section>
         <section className="px-8 mt-8 w-full flex justify-center flex-col gap-8 items-center">
           <div className="max-w-[1300px] w-full">
-            <div className="max-w-[1300px] flex items-center space-x-6">
+            <div className="flex sm:flex-row sm:items-center sm:space-x-4 flex-col justify-start space-y-2">
               <h4 className="text-lg">Trending</h4>
               <SliderButton
                 onLeftClick={onLeftDurationClick}
@@ -183,20 +193,27 @@ const Homepage = () => {
                 rightLabel="This week"
               />
             </div>
-              <ScrollArea className="w-full">
-                <div className="flex gap-4 py-6">
-                    {isTrendingLoading && new Array(10).fill(null).map((_, idx) => {
-                        return <MovieCardSkeleton key={idx} />
-                    })}
-                    {trendingMovies.map((movie) => {
-                      return <MovieCard key={movie.id} movie={movie} onClick={() => onMovieCardClick(movie.id.toString())} />;
-                    })}
-                </div>
-                <ScrollBar orientation="horizontal" />
-              </ScrollArea>
+            <ScrollArea className="w-full">
+              <div className="flex gap-4 py-6">
+                {isTrendingLoading &&
+                  new Array(10).fill(null).map((_, idx) => {
+                    return <MovieCardSkeleton key={idx} />;
+                  })}
+                {trendingMovies.map((movie) => {
+                  return (
+                    <MovieCard
+                      key={movie.id}
+                      movie={movie}
+                      onClick={() => onMovieCardClick(movie.id.toString())}
+                    />
+                  );
+                })}
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
           </div>
           <div className="max-w-[1300px] w-full">
-            <div className="max-w-[1300px] flex items-center space-x-6">
+            <div className="flex sm:flex-row sm:items-center sm:space-x-4 flex-col justify-start space-y-2">
               <h4 className="text-lg">Latest Trailers</h4>
               <SliderButton
                 onLeftClick={onPopularTrailerClick}
@@ -207,30 +224,41 @@ const Homepage = () => {
             </div>
             <ScrollArea className="w-full">
               <div className="flex gap-4 py-6">
-                    {isTrendingLoading && new Array(10).fill(null).map((_, idx) => {
-                        return <MovieCardSkeleton key={idx} />
-                    })}
-                    {(trailerType == MovieTrailerType.POPULAR ? popularMovies : nowPlayingMovies).map((movie) => {
-                            return <TrailerCard key={movie.id} movie={movie}/>;
-                    })}
-                </div>
-                <ScrollBar orientation="horizontal"/>
+                {isTrendingLoading &&
+                  new Array(10).fill(null).map((_, idx) => {
+                    return <MovieCardSkeleton key={idx} />;
+                  })}
+                {(trailerType == MovieTrailerType.POPULAR
+                  ? popularMovies
+                  : nowPlayingMovies
+                ).map((movie) => {
+                  return <TrailerCard key={movie.id} movie={movie} />;
+                })}
+              </div>
+              <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
           <div className="max-w-[1300px] w-full">
-            <div className="max-w-[1300px] flex items-center space-x-6">
+            <div className="flex">
               <h4 className="text-lg">What's popular</h4>
             </div>
             <ScrollArea className="w-full">
               <div className="flex gap-4 py-6">
-                    {isTrendingLoading && new Array(10).fill(null).map((_, idx) => {
-                        return <MovieCardSkeleton key={idx} />
-                    })}
-                    {popularMovies.map((movie) => {
-                      return <MovieCard key={movie.id} movie={movie} onClick={() => onMovieCardClick(movie.id.toString())} />;
-                    })}
-                </div>
-                <ScrollBar orientation="horizontal"/>
+                {isTrendingLoading &&
+                  new Array(10).fill(null).map((_, idx) => {
+                    return <MovieCardSkeleton key={idx} />;
+                  })}
+                {popularMovies.map((movie) => {
+                  return (
+                    <MovieCard
+                      key={movie.id}
+                      movie={movie}
+                      onClick={() => onMovieCardClick(movie.id.toString())}
+                    />
+                  );
+                })}
+              </div>
+              <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
         </section>

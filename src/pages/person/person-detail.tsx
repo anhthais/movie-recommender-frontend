@@ -74,8 +74,8 @@ const PersonDetail = () => {
   if (hasError || !person || !person.movie_credits) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center">
-        <h1 className="text-2xl font-bold text-white">Person Not Found</h1>
-        <p className="text-white mt-2">
+        <h1 className="text-2xl font-bold text-primary">Person Not Found</h1>
+        <p className="text-primary mt-2">
           We couldn't find the person you were looking for. Please check the ID
           and try again.
         </p>
@@ -91,16 +91,13 @@ const PersonDetail = () => {
     }))
     .sort((a, b) => (b.releaseYear || 0) - (a.releaseYear || 0));
   return (
-    <div className="flex flex-col md:flex-row bg-black bg-center p-6 rounded-lg shadow-md">
-      {/* Left Section - Image and Personal Info */}
+    <div className="flex flex-col md:flex-row bg-background bg-center p-6 rounded-lg shadow-md text-primary/90">
       <div className="flex flex-col items-center w-full md:w-1/4 p-4">
-        {/* Profile Image */}
         <img
           src={getResourceFromTmdb(person?.profile_path ?? "default-image-url")}
           className="w-full h-auto rounded-lg shadow-lg"
         />
 
-        {/* Personal Info */}
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-2">Personal Info</h2>
 
@@ -108,9 +105,6 @@ const PersonDetail = () => {
             <p className="mb-2">
               <span className="font-bold">Known For:</span>{" "}
               {person?.known_for_department}
-            </p>
-            <p className="mb-2">
-              {/* <span className="font-bold">Known Credits:</span> {person?.known_for_department} */}
             </p>
             <p className="mb-2">
               <span className="font-bold">Gender:</span>{" "}
@@ -147,11 +141,9 @@ const PersonDetail = () => {
           </p>
         </p>
         <div className="max-w-[1300px] w-full">
-          <div className="max-w-[1300px] flex items-center space-x-6">
-            <span className="font-bold">Acting list:</span>
-          </div>
+          <div className="font-bold">Acting list</div>
           <ScrollArea className="w-full">
-            <div className="flex gap-4 py-6">
+            <div className="flex gap-4 py-2">
               {isMovieLoading &&
                 new Array(10).fill(null).map((_, idx) => {
                   return <MovieCardSkeleton key={idx} />;
@@ -170,7 +162,7 @@ const PersonDetail = () => {
           </ScrollArea>
         </div>
 
-        <div className="p-6 bg-black">
+        <div className="p-6 bg-background">
           <div className="bg-black shadow-md rounded-lg p-4 border border-gray-700">
             {sortedCredits.map((credit, index) => (
               <div
@@ -182,7 +174,7 @@ const PersonDetail = () => {
                 </div>
                 <div className="flex-grow">
                   <h3
-                    className="text-white font-semibold hover:text-blue-500 cursor-pointer"
+                    className="text-primary font-semibold hover:text-key cursor-pointer"
                     onClick={() => onMovieClick(credit.id.toString())}
                   >
                     {credit.title}

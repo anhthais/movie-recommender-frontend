@@ -26,6 +26,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/custom/spinner";
 import { Helmet } from "react-helmet";
+import { TrashFill } from "react-bootstrap-icons";
 
 const MovieListPage = () => {
   const navigate = useNavigate();
@@ -235,18 +236,18 @@ const MovieListPage = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
+    <div className="w-full h-full px-3 flex flex-col items-center overflow-x-auto">
       <Helmet>
         <title>Movie list</title>
       </Helmet>
-      <div className="w-full max-w-[1440px] flex flex-row p-6 space-x-6">
-        <div className="w-[300px] flex-shrink-0 space-y-4 mt-12">
+      <div className="w-full max-w-[1440px] flex flex-col space-y-6 md:flex-row md:space-x-6">
+        <div className="min-w-[300px] md:w-[300px] flex-shrink-0 space-y-4 mt-12">
           <Accordion
             type="single"
             collapsible
-            className="w-full bg-gray-900 rounded-lg shadow-lg pl-4 pr-4"
+            className="w-full bg-secondary text-bg-secondary-foreground rounded-lg shadow-lg px-4"
           >
-            <AccordionItem value="sort" className="rounded-xl bg-red ">
+            <AccordionItem value="sort" className="rounded-xl">
               <AccordionTrigger>
                 <span className="text-lg">Sort</span>
               </AccordionTrigger>
@@ -275,9 +276,9 @@ const MovieListPage = () => {
           <Accordion
             type="single"
             collapsible
-            className="w-full bg-gray-900 rounded-lg shadow-lg pl-4 pr-4"
+            className="w-full bg-secondary rounded-lg shadow-lg px-4"
           >
-            <AccordionItem value="filter" className="rounded-xl bg-red ">
+            <AccordionItem value="filter" className="rounded-xl">
               <AccordionTrigger>
                 <div className="flex items-center justify-between space-x-3">
                   <span className="text-lg">Filter</span>
@@ -285,7 +286,7 @@ const MovieListPage = () => {
                     <TooltipTrigger asChild>
                       <Button
                         variant="outline"
-                        className="bg-transparent border-0 p-1 m-0 hover:bg-transparent hover:text-rose-600"
+                        className="bg-transparent border-0 p-1 m-0 hover:bg-transparent hover:text-destructive"
                         onClick={(event) => {
                           event.stopPropagation();
                           handleClearFilters();
@@ -294,7 +295,7 @@ const MovieListPage = () => {
                         <FilterX className="w-3 h-3" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent className="p-2 duration-200">
+                    <TooltipContent className="p-2">
                       Clear Filters
                     </TooltipContent>
                   </Tooltip>
@@ -336,10 +337,10 @@ const MovieListPage = () => {
                       </Popover>
                       <Button
                         variant="outline"
-                        className="p-1 m-0 border-0 bg-transparent"
+                        className="p-1 m-0 border-0 bg-transparent hover:bg-transparent hover:text-destructive"
                         onClick={() => setFromDate(undefined)}
                       >
-                        <TrashIcon />
+                        <TrashFill />
                       </Button>
                     </div>
                   </div>
@@ -373,10 +374,10 @@ const MovieListPage = () => {
                       </Popover>
                       <Button
                         variant="outline"
-                        className="p-1 m-0 border-0 bg-transparent"
+                        className="p-1 m-0 border-0 bg-transparent hover:bg-transparent hover:text-destructive"
                         onClick={() => setToDate(undefined)}
                       >
-                        <TrashIcon />
+                        <TrashFill />
                       </Button>
                     </div>
                   </div>
@@ -390,11 +391,11 @@ const MovieListPage = () => {
                         key={genre.id}
                         onClick={() => handleToggleGenre(genre.id)}
                         className={cn(
-                          "px-3 py-1 text-sm rounded-full transition-colors text-white",
-                          "hover:bg-rose-900 hover:text-white",
+                          "px-3 py-1 text-sm rounded-full transition-colors",
+                          "hover:bg-keysecondary hover:text-keysecondary-foreground dark:hover:bg-keysecondary dark:hover:text-keysecondary-foreground",
                           selectedGenres.includes(genre.id)
-                            ? "bg-rose-900"
-                            : "bg-gray-800 text-gray-300"
+                            ? "bg-keysecondary"
+                            : "dark:bg-gray-700 bg-slate-300"
                         )}
                       >
                         {genre.name}
@@ -405,13 +406,13 @@ const MovieListPage = () => {
                 <div className="flex flex-col space-y-2">
                   <Separator className="mt-2" />
                   <p className="font-light text-lg">User Score</p>
-                  <div className="flex items-center justify-center space-x-2 font-semibold text-white">
+                  <div className="flex items-center justify-center space-x-2 font-semibold">
                     <span>Rated</span>
-                    <span className="bg-gray-800 px-2 rounded-md shadow">
+                    <span className="bg-secondary px-2 rounded-md shadow">
                       {scoreValues[0]}
                     </span>
                     <span>-</span>
-                    <span className="bg-gray-800 px-2 rounded-md shadow">
+                    <span className="bg-secondary px-2 rounded-md shadow">
                       {scoreValues[1]}
                     </span>
                   </div>
@@ -430,13 +431,13 @@ const MovieListPage = () => {
                 <div className="flex flex-col space-y-2">
                   <Separator className="mt-2" />
                   <p className="font-light text-lg">User Votes</p>
-                  <div className="flex items-center justify-center space-x-2 font-semibold text-white">
+                  <div className="flex items-center justify-center space-x-2 font-semibold">
                     <span>Votes</span>
-                    <span className="bg-gray-800 px-2 rounded-md shadow">
+                    <span className="bg-secondary px-2 rounded-md shadow">
                       {voteValues[0]}
                     </span>
                     <span>-</span>
-                    <span className="bg-gray-800 px-2 rounded-md shadow">
+                    <span className="bg-secondary px-2 rounded-md shadow">
                       {voteValues[1]}
                     </span>
                   </div>
@@ -455,24 +456,23 @@ const MovieListPage = () => {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-
           <Button
             ref={buttonRef}
-            variant="secondary"
-            className="w-full py-3 transition-transform duration-300 hover:bg-rose-800 hover:text-white"
+            variant="default"
+            className="bg-keysecondary/85 text-keysecondary-foreground w-full py-3 transition-transform duration-300 hover:bg-keysecondary hover:text-keysecondary-foreground"
             onClick={handleFilter}
           >
             Apply Filters
           </Button>
         </div>
-        <div className="flex-grow px-4 w-full">
-          <div className="flex flex-row justify-between items-center mb-4">
+        <div className="flex-grow w-full">
+          <div className="flex flex-row pr-4 justify-between items-center mb-4">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="text-rose-600 p-3"
+                    className="text-key p-4"
                     onClick={handleCardViewLayoutClick}
                   >
                     {cardViewLayout == CardViewLayout.GRID ? (
@@ -490,16 +490,16 @@ const MovieListPage = () => {
               </Tooltip>
             </TooltipProvider>
             <div className="flex items-center space-x-2">
+              <Label htmlFor="infinite-switch">Infinite Scroll</Label>
               <Switch
                 id="infinite-switch"
                 checked={isInfiniteScroll}
                 onCheckedChange={handleToggleInfiniteScroll}
               />
-              <Label htmlFor="infinite-switch">Enable Infinite Scroll</Label>
             </div>
           </div>
           {cardViewLayout === CardViewLayout.GRID ? (
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center">
               {!isFilteringMovies
                 ? movies.map((movie) => (
                     <MovieCard
@@ -515,7 +515,7 @@ const MovieListPage = () => {
                   })}
             </div>
           ) : (
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center">
               {!isFilteringMovies
                 ? movies.map((movie) => (
                     <MovieCardList
@@ -539,7 +539,7 @@ const MovieListPage = () => {
           {!isInfiniteScroll &&
             isFilterMoviesSuccess &&
             filteredMoviesData?.data && (
-              <div className="flex w-full justify-center mt-12">
+              <div className="flex justify-center mt-12">
                 <CustomPagination
                   currentPage={currentPage}
                   totalPages={filteredMoviesData.data?.total_pages!}
@@ -556,7 +556,7 @@ const MovieListPage = () => {
         >
           <Button
             variant="secondary"
-            className="bg-secondary/70 w-full py-3 transition-transform duration-300 hover:bg-rose-800 hover:text-white"
+            className="bg-secondary/60 w-full py-3 transition-colors duration-200 hover:bg-keysecondary hover:text-keysecondary-foreground"
             onClick={handleFilter}
           >
             Apply Filters
@@ -564,7 +564,7 @@ const MovieListPage = () => {
         </div>
       )}
 
-      <Button
+      {/* <Button
         variant={"secondary"}
         onClick={() => {
           window.scrollTo({
@@ -575,7 +575,7 @@ const MovieListPage = () => {
         className="fixed bottom-4 right-4 z-50 bg-gray-600/80 text-white px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:bg-blue-800"
       >
         ↑ Back to Top
-      </Button>
+      </Button> */}
     </div>
   );
 }

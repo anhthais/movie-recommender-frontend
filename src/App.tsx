@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import { TopLoaderContextProvider } from './app/context/top-bar-loader-context'
 import ErrorBoundary from './components/error-boundary'
 import { TooltipProvider } from '@radix-ui/react-tooltip'
+import { ThemeProvider } from './app/context/theme-provider'
 
 function App() {
   const loaderRef = useRef<LoadingBarRef>(null);
@@ -27,23 +28,23 @@ function App() {
   };
   
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <LoadingBar ref={loaderRef} />
       <Provider store={store}>
-          <TopLoaderContextProvider
-            values={{ staticStart, complete, continuousStart }}
-            >
-            <TooltipProvider>
-              <AuthLoader>
-                <ErrorBoundary>
-                  <RouterProvider router={router}></RouterProvider>
-                  <Toaster />
-                </ErrorBoundary>
-              </AuthLoader>
-            </TooltipProvider>
-          </TopLoaderContextProvider>
+        <TopLoaderContextProvider
+          values={{ staticStart, complete, continuousStart }}
+        >
+          <TooltipProvider>
+            <AuthLoader>
+              <ErrorBoundary>
+                <RouterProvider router={router}></RouterProvider>
+                <Toaster />
+              </ErrorBoundary>
+            </AuthLoader>
+          </TooltipProvider>
+        </TopLoaderContextProvider>
       </Provider>
-    </>
+    </ThemeProvider>
   );
 }
 

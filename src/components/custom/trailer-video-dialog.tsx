@@ -12,11 +12,11 @@ export const TrailerVideoDialog = (props: TrailerVideoDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="xl:min-w-[1080px] lg:min-w-[840px] lg:min-h-[450px]">
         <DialogHeader>
           <DialogTitle>{video.name}</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="py-4">
           {
             video.site === 'YouTube' 
               ? <YouTubeEmbed videoId={video.key} />
@@ -31,10 +31,9 @@ export const TrailerVideoDialog = (props: TrailerVideoDialogProps) => {
 const YouTubeEmbed = (props: {videoId: string}) => {
   const {videoId} = props;
   return (
-    <div className="video-responsive w-full px-2">
+    <div className="relative w-full pb-[56.25%]">
       <iframe
-        width="100%"
-        height="315"
+        className="absolute top-0 left-0 w-full h-full"
         src={`https://www.youtube.com/embed/${videoId}`}
         title="YouTube video"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

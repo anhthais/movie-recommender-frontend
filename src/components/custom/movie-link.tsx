@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ExternalLinkIcon } from "lucide-react";
+import { BoxArrowUpRight } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 type MovieCardMiniProps = {
@@ -17,7 +17,7 @@ const MovieLink = ({ movieId, movieName }: MovieCardMiniProps) => {
       )}
     >
       <span className="font-semibold">{movieName}</span>
-      <ExternalLinkIcon className="h-4 w-4 shrink-0" />
+      <BoxArrowUpRight className="h-4 w-4 shrink-0" />
     </Link>
   );
 }

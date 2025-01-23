@@ -15,7 +15,6 @@ export type TopLoaderContextProviderProps = {
 }
   
 export const TopLoaderContextProvider = ({ children, values } : TopLoaderContextProviderProps) => {
-
     return (
         <TopLoaderContext.Provider value={values}>
             { children }

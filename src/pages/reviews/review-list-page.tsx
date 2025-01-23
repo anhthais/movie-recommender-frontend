@@ -200,7 +200,7 @@ const ReviewListPage = () => {
             )}
             <div>
               <p
-                className="text-lg font-semibold text-gray-300 hover:text-rose-600 hover:cursor-pointer"
+                className="text-lg font-semibold text-gray-300 hover:text-key hover:cursor-pointer"
                 onClick={() => navigate("/movie/" + movie?.id)}
               >
                 {movie?.title}
@@ -208,7 +208,7 @@ const ReviewListPage = () => {
               <p className="text-sm text-gray-300">
                 Release: {dayjs(movie?.release_date).format("MMM DD YYYY")}
               </p>
-              <h1 className="mt-3 text-3xl font-semibold">User Reviews</h1>
+              <h1 className="mt-3 text-3xl text-white font-semibold">User Reviews</h1>
             </div>
           </div>
         </div>
@@ -218,14 +218,15 @@ const ReviewListPage = () => {
           <h3 className="text-xl font-bold mb-4">
             {isGetReviewsSuccess && reviewData && reviewData.data && (
               <span className="inline-flex items-center text-lg font-medium">
-                Showing {reviewData.data.reviews.length} of {reviewData.data.total} reviews
+                Showing {reviewData.data.reviews.length} of{" "}
+                {reviewData.data.total} reviews
               </span>
             )}
           </h3>
           <EditorDialog
             triggerElement={
-              <Button className="rounded-full bg-rose-900 text-gray-300 hover:bg-rose-800 hover:text-white py-2 px-4">
-                Add New Review
+              <Button className="rounded-full hover:bg-keysecondary hover:text-keysecondary-foreground transition duration-200 py-2 px-4">
+                Add Review
               </Button>
             }
             open={openAddReviewDialog}
@@ -256,18 +257,20 @@ const ReviewListPage = () => {
               ))}
             </ul>
           ) : (
-            <p className="flex item-center text-gray-300">
+            <p className="flex item-center text-primary/80">
               There are no reviews that matched for this movie.
             </p>
           )}
         </div>
-        {isGetReviewsSuccess && reviewData?.data && reviewData.data.reviews.length > 0 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={reviewData.data?.total_pages!}
-            onPageChange={handlePageChange}
-          />
-        )}
+        {isGetReviewsSuccess &&
+          reviewData?.data &&
+          reviewData.data.reviews.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={reviewData.data?.total_pages!}
+              onPageChange={handlePageChange}
+            />
+          )}
         <EditorDialog
           open={openEditReviewDialog}
           onOpenChange={setOpenEditReviewDialog}

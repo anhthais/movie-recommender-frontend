@@ -6,8 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 import dayjs from "dayjs";
 import { Movie } from "@/app/api/types/movie.type";
 import { useMovieActions } from "@/hooks/use-movie-actions";
-import { EyeFill, HeartFill } from "react-bootstrap-icons";
-import { Eye, Heart } from "lucide-react";
+import { Eye, EyeFill, Heart, HeartFill } from "react-bootstrap-icons";
 import { RatingIndicator } from "./rating-indicator";
 
 type MovieCardListProps = {
@@ -33,14 +32,14 @@ export const MovieCardList = ({ movie, onClick }: MovieCardListProps) => {
   }
 
   return (
-    <div className="min-h-40 w-full flex bg-gray-rose-gradient rounded-md overflow-hidden shadow-lg">
+    <div className="md:h-40 w-full flex bg-gray-rose-gradient-light dark:bg-gray-rose-gradient rounded-md overflow-hidden shadow-lg">
       {movie.poster_path ? (
-        <div className="w-28 relative flex h-full flex-shrink-0 hover:cursor-pointer hover:transform hover:scale-105 transition duration-200">
+        <div className="w-24 md:w-28 relative flex h-full flex-shrink-0 hover:cursor-pointer hover:transform hover:scale-105 transition duration-200">
           <img
             onLoad={onImageLoad}
             src={getResourceFromTmdb(movie.poster_path)}
             alt={movie.title}
-            className={`w-28 object-cover h-full flex-shrink-0 ${
+            className={`w-24 md:w-28 object-cover flex-shrink-0 ${
               !loaded ? "opacity-0" : ""
             }`}
             onClick={onClick}
@@ -50,64 +49,67 @@ export const MovieCardList = ({ movie, onClick }: MovieCardListProps) => {
           )}
         </div>
       ) : (
-        <DefaultImage alt={movie.title} className="w-28 flex-shrink-0" />
+        <DefaultImage
+          alt={movie.title}
+          className="w-24 md:w-28 flex-shrink-0"
+        />
       )}
 
       <div className="flex flex-col justify-center">
-        <div className="flex flex-col py-2 px-3 space-y-4">
+        <div className="py-2 px-3 space-y-4">
           <div className="flex flex-row items-center space-x-2">
-            <div className="relative w-10 h-10 rounded-full shadow-xl scale-[80%] mr-3">
-              <RatingIndicator rating={movie.vote_average} />
-            </div>
+            <RatingIndicator rating={movie.vote_average} strokeWidth={2} />
             <div>
               <Link
                 to={`/movie/${movie.id}`}
-                className="inline-flex space-x-2 hover:shadow-lg transition duration-200"
+                className="inline-flex space-x-2"
               >
-                <span className="text-lg font-semibold text-white hover:text-rose-600">
+                <span className="text-lg font-semibold hover:text-key line-clamp-1 md:line-clamp-none">
                   {movie.title}
                 </span>
                 {movie.original_title &&
                   movie.original_title !== movie.title && (
-                    <span className="text-lg text-gray-400 italic">
+                    <span className="italic text-primary/70 hidden md:block">
                       ({movie.original_title})
                     </span>
                   )}
               </Link>
               {movie.release_date && (
-                <p className="text-sm text-gray-500">
-                  Release: {dayjs(movie.release_date).format("MMM DD, YYYY")}
+                <p className="text-sm text-primary/70">
+                  {dayjs(movie.release_date).format("MMM DD, YYYY")}
                 </p>
               )}
             </div>
           </div>
           {movie.overview && (
-            <p className="text-sm text-gray-400 line-clamp-2">
+            <p className="text-sm line-clamp-2 text-primary/80">
               {movie.overview}
             </p>
           )}
         </div>
-        <div className="flex flex-row space-x-4 m-3">
+        <div className="flex flex-row space-x-4 m-3 text-primary/70">
           <div className={`flex space-x-1 items-center`}>
             {isInWatchLaterList ? (
               <>
                 <EyeFill
                   className="text-green-600 hover:cursor-pointer hover:transform hover:scale-125 duration-200"
-                  size={22}
+                  size={20}
                   onClick={onWatchListActionClick}
                 />
-                <span className="text-xs text-gray-500">
+                <span className="text-xs hidden sm:block">
                   Remove from watch list
                 </span>
               </>
             ) : (
               <>
                 <Eye
-                  className="text-gray-300 hover:text-green-600 hover:cursor-pointer hover:transform hover:scale-125 duration-200"
-                  size={22}
+                  className="hover:text-green-600 hover:cursor-pointer hover:transform hover:scale-125 duration-200"
+                  size={20}
                   onClick={onWatchListActionClick}
                 />
-                <span className="text-xs text-gray-500">Add to watch list</span>
+                <span className="text-xs hidden sm:block">
+                  Add to watch list
+                </span>
               </>
             )}
           </div>
@@ -116,19 +118,19 @@ export const MovieCardList = ({ movie, onClick }: MovieCardListProps) => {
               <>
                 <HeartFill
                   className="text-pink-600 hover:cursor-pointer hover:transform hover:scale-125 duration-200"
-                  size={22}
+                  size={18}
                   onClick={onLikeActionClick}
                 />
-                <p className="text-xs text-gray-500">Unlike</p>
+                <p className="text-xs hidden sm:block">Unlike</p>
               </>
             ) : (
               <>
                 <Heart
-                  className=" text-gray-300 hover:text-pink-600 hover:cursor-pointer hover:transform hover:scale-125 duration-200"
-                  size={22}
+                  className="hover:text-pink-600 hover:cursor-pointer hover:transform hover:scale-125 duration-200"
+                  size={18}
                   onClick={onLikeActionClick}
                 />
-                <p className="text-xs text-gray-500">Like</p>
+                <p className="text-xs hidden sm:block">Like</p>
               </>
             )}
           </div>

@@ -34,53 +34,51 @@ const MovieActionPopover = (props: MovieActionPopoverProps) => {
   }; 
 
     return (
-        <Popover>
-            <PopoverTrigger asChild>
-                {children}
-            </PopoverTrigger>
-            <PopoverContent className="bg-black z-[90] rounded-lg" sideOffset={4}>
-                <div>
-                    <ul className="grid gap-3 px-2 py-2 text-sm">
-                      <div className={`flex gap-4 items-center px-4 py-2 hover:bg-primary-foreground rounded-lg`} onClick={onWatchListActionClick}>
-                        {
-                          isInWatchLaterList 
-                            ? (
-                              <>
-                                <EyeFill className="text-green-600" />
-                                <p>Remove from watch list</p>
-                              </>
-                            )
-                            : (
-                              <>
-                                <Eye />
-                                <p>Add to watch list</p>
-                              </>
-                            )
-                        }
-                      </div>
-                      <div className={`flex gap-4 items-center px-4 py-2 hover:bg-primary-foreground rounded-lg`} onClick={onLikeActionClick}>
-                        {
-                          isLiked
-                            ? (
-                              <>
-                                <HeartFill className="text-pink-600"/>
-                                <p>Unlike this movie</p>
-                              </>
-                            )
-                            : (
-                              <>
-                                <Heart />
-                                <p>Like this movie</p>
-                              </>
-                            )
-                        }
-                      </div>
-                          
-                    </ul>
-                </div>
-            </PopoverContent>
-        </Popover>
-    )
+      <Popover>
+        <PopoverTrigger asChild>{children}</PopoverTrigger>
+        <PopoverContent
+          className="bg-popover/85 shadow-xl z-[100] rounded-xl"
+          sideOffset={4}
+        >
+          <div>
+            <ul className="grid gap-3 px-2 py-2 text-sm">
+              <div
+                className="flex gap-4 items-center px-4 py-2 hover:bg-primary hover:text-primary-foreground hover:scale-105 hover:transform duration-200 rounded-lg"
+                onClick={onWatchListActionClick}
+              >
+                {isInWatchLaterList ? (
+                  <>
+                    <EyeFill className="text-green-600" />
+                    <p>Remove from watch list</p>
+                  </>
+                ) : (
+                  <>
+                    <Eye />
+                    <p>Add to watch list</p>
+                  </>
+                )}
+              </div>
+              <div
+                className={`flex gap-4 items-center px-4 py-2 hover:bg-primary hover:text-primary-foreground hover:scale-105 hover:transform duration-200 rounded-lg`}
+                onClick={onLikeActionClick}
+              >
+                {isLiked ? (
+                  <>
+                    <HeartFill className="text-pink-600" />
+                    <p>Unlike this movie</p>
+                  </>
+                ) : (
+                  <>
+                    <Heart />
+                    <p>Like this movie</p>
+                  </>
+                )}
+              </div>
+            </ul>
+          </div>
+        </PopoverContent>
+      </Popover>
+    );
 };
 
 export default MovieActionPopover;

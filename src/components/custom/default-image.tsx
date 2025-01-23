@@ -14,7 +14,7 @@ const DefaultImage: React.FC<DefaultImageProps> = ({
 }) => {
   return (
     <div
-      className={`flex justify-center items-center bg-stone-300 rounded-lg ${className}`}
+      className={`flex justify-center items-center bg-gray-400/80 rounded-lg ${className}`}
     >
       <img
         src={defaultImageIcon}

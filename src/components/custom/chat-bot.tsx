@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/chat/expandable-chat";
 import { ChatMessageList } from "@/components/ui/chat/chat-message-list";
 import { Button } from "../ui/button";
-import { Send } from "lucide-react";
+import { Send } from "react-bootstrap-icons";
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -259,7 +259,7 @@ export default function Chatbot() {
             </SelectContent>
           </Select>
         </div>
-        <Button variant="secondary" onClick={() => setMessages([])}>
+        <Button variant="default" onClick={() => setMessages([])}>
           New Chat
         </Button>
       </ExpandableChatHeader>

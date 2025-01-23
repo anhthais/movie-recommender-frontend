@@ -53,7 +53,7 @@ const WatchListPage = () => {
           </div>
         </div>
         <div className="px-6 py-4 flex items-center gap-32">
-          <div className={`px-6 grid mt-8 gap-8 w-full ${cardViewLayout === CardViewLayout.GRID ? 'max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 grid-cols-5' : ''}`}>
+          <div className={`grid mt-4 gap-8 w-full ${cardViewLayout === CardViewLayout.GRID ? 'max-sm:grid-cols-2 max-md:grid-cols-3 max-lg:grid-cols-4 grid-cols-5' : ''}`}>
             {
               (isReversed ? [...watchListMovies].reverse() : watchListMovies).map((movie) => (
                   <PlayListMovieCard

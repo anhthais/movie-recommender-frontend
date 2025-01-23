@@ -1,4 +1,4 @@
-import { Copy } from "lucide-react"
+import { Copy } from "react-bootstrap-icons"
  
 import { Button } from "@/components/ui/button"
 import {
