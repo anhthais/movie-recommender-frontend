@@ -2,6 +2,8 @@ import { useLazyGetKeywordQuery } from "@/app/api/movies/movie-api-slice";
 import { SearchKeyword } from "@/app/api/types/movie.type";
 import Chatbot from "@/components/custom/chat-bot";
 import Footer from "@/components/custom/footer";
+import Logo from "@/components/custom/logo";
+import CustomNavLink from "@/components/custom/nav-link";
 import { UserPopover } from "@/components/custom/user-popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,8 +15,6 @@ import { Search } from "lucide-react";
 import { ChangeEvent, ChangeEventHandler, FormEvent, useEffect, useState } from "react";
 import { BoxArrowRight, List, XLg } from "react-bootstrap-icons";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-
-const SMALL_BREAKPOINT = 768;
 
 export type AuthLayoutProps = {
     children: React.ReactNode,
@@ -76,7 +76,7 @@ export const MainLayout = ({ children}: AuthLayoutProps) => {
       {authentication && !authentication.activated ? (
         <Navigate
           to={`/activate-account?redirectTo=${encodeURIComponent(
-            location.pathname
+            location.pathname,
           )}`}
         />
       ) : (
@@ -85,23 +85,10 @@ export const MainLayout = ({ children}: AuthLayoutProps) => {
             <div className="flex w-full justify-between items-center px-6">
               {!isSmallScreen ? (
                 <nav className="flex flex-row items-center space-x-6">
-                  <Link to={"/"}>
-                    <div className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-rose-900 drop-shadow-lg hover:text-key transition-all duration-200">
-                      <span className="tracking-tight">TMDB2</span>
-                    </div>
-                  </Link>
-                  <Link to={"/movie"}>
-                    <p className="font-semibold hover:text-key relative group pt-1 pb-1">
-                      Movies
-                      <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-key transition-all duration-300 group-hover:w-full"></span>
-                    </p>
-                  </Link>
-                  <Link to={"/"}>
-                    <p className="font-semibold hover:text-key relative group pt-1 pb-1">
-                      Pick a movie
-                      <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-key transition-all duration-300 group-hover:w-full"></span>
-                    </p>
-                  </Link>
+                  <Logo />
+                  <CustomNavLink to="/movie" label="Movies" />
+                  <CustomNavLink to="/" label="Reviews" />
+                  <CustomNavLink to="/" label="Random Picker" />
                 </nav>
               ) : (
                 <nav className="flex flex-row items-center space-x-2">
@@ -270,11 +257,7 @@ export const MainLayout = ({ children}: AuthLayoutProps) => {
                 <div className="flex flex-col h-full p-4 pb-8 space-y-6 justify-between">
                   <div className="flex flex-col space-y-6">
                     <div className="flex flex-row items-center justify-between">
-                      <Link to={"/"}>
-                        <div className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-rose-900 drop-shadow-lg hover:text-key transition-all duration-200">
-                          <span className="tracking-tight">TMDB2</span>
-                        </div>
-                      </Link>
+                      <Logo />
                       <div
                         className="font-semibold text-2xl hover:cursor-pointer hover:text-key"
                         onClick={() => setSidebarOpen(false)}
@@ -282,19 +265,10 @@ export const MainLayout = ({ children}: AuthLayoutProps) => {
                         <XLg />
                       </div>
                     </div>
-                    <div className="flex flex-col space-y-2">
-                      <Link
-                        to={"/movie"}
-                        className="py-2 font-semibold hover:text-key"
-                      >
-                        Movies
-                      </Link>
-                      <Link
-                        to={"/"}
-                        className="py-2 font-semibold hover:text-key"
-                      >
-                        Pick a movie
-                      </Link>
+                    <div className="flex flex-col space-y-3">
+                      <CustomNavLink to="/movie" label="Movies" />
+                      <CustomNavLink to="/" label="Reviews" />
+                      <CustomNavLink to="/" label="Random Picker" />
                     </div>
                   </div>
                   {isAuthenticated ?? (

@@ -36,7 +36,7 @@ export const ReviewCard = ({
   }, [comment]);
 
   return (
-    <div className="bg-gray-rose-gradient-light dark:bg-gray-rose-gradient rounded-xl shadow-xl p-4 w-full">
+    <div className="bg-gray-rose-gradient-light dark:bg-gray-rose-gradient rounded-xl shadow-xl p-4 pb-0 w-full">
       <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center">
         <div className="flex items-center space-x-2">
           <Avatar className="shrink-0">
@@ -72,7 +72,7 @@ export const ReviewCard = ({
                   <PencilSquare />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Edit your comment</TooltipContent>
+              <TooltipContent>Edit your review</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger>
@@ -83,7 +83,7 @@ export const ReviewCard = ({
                   <Trash />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Delete your comment</TooltipContent>
+              <TooltipContent>Delete your review</TooltipContent>
             </Tooltip>
           </div>
         )}

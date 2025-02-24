@@ -19,6 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Helmet } from 'react-helmet';
+import Logo from '@/components/custom/logo';
 
 const LoginPage = () => {
 
@@ -124,7 +125,7 @@ const LoginPage = () => {
               <title>Login</title>
             </Helmet>
             <div className="max-w-[480px] w-full flex justify-center flex-col items-center max-md:hidden">
-                <h3 className=" text-4xl font-semibold">TMDB2</h3>
+                <Logo className='text-5xl hover:scale-125 mb-4'/>
                 <img src={authBgImage}/>
             </div>
             <LoginForm 

@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useLazyGetAuthenticationQuery } from "@/app/api/user/user.api.slice";
 import { setAuthenticatedUser } from "@/app/api/auth/auth-slice";
 import { Helmet } from "react-helmet";
+import Logo from "@/components/custom/logo";
 
 const RegisterPage = () => {
 
@@ -97,23 +98,23 @@ const RegisterPage = () => {
     }, [isAuthSuccess, authData]);
 
     return (
-        <div className="flex w-full justify-center h-full min-h-screen items-center gap-10">
-            <Helmet>
-              <title>Register</title>
-            </Helmet>
-            <div className="max-w-[480px] w-full flex justify-center flex-col items-center max-md:hidden">
-                <h3 className=" text-4xl font-semibold">TMDB2</h3>
-                <img src={authBgImage}/>
-            </div>
-            <RegisterForm 
-                form={form} 
-                onSubmit={onSubmit}
-                isLoading={isLoading || isGgLoading}
-                onGoogleAuthError={onGoogleAuthError}
-                onGoogleAuthSuccess={onGoogleAuthSuccess}
-            />
+      <div className="flex w-full justify-center h-full min-h-screen items-center gap-10">
+        <Helmet>
+          <title>Register</title>
+        </Helmet>
+        <div className="max-w-[480px] w-full flex justify-center flex-col items-center max-md:hidden">
+          <Logo className="text-5xl hover:scale-125 mb-4" />
+          <img src={authBgImage} />
         </div>
-    )
+        <RegisterForm
+          form={form}
+          onSubmit={onSubmit}
+          isLoading={isLoading || isGgLoading}
+          onGoogleAuthError={onGoogleAuthError}
+          onGoogleAuthSuccess={onGoogleAuthSuccess}
+        />
+      </div>
+    );
 };
 
 export default RegisterPage;

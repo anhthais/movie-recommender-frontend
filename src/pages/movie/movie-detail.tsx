@@ -547,7 +547,7 @@ const MovieDetail = () => {
                   selectedRating={selectedRating}
                   onRatingClick={onRatingClick}
                 >
-                  <Tooltip>
+                  <Tooltip delayDuration={50}>
                     <TooltipTrigger>
                       <Button
                         className="bg-gray-rose-gradient-light dark:bg-gray-rose-gradient text-primary px-4 py-4 rounded-full text-sm hover:scale-105 transition duration-200"
@@ -582,7 +582,7 @@ const MovieDetail = () => {
               }
             </div>
             <div className="flex gap-4 mt-6">
-              <Tooltip>
+              <Tooltip delayDuration={50}>
                 <TooltipTrigger asChild>
                   <AddMovieToPlaylistDialog movieId={movie.id}>
                     <Button
@@ -601,7 +601,7 @@ const MovieDetail = () => {
                   </p>
                 </TooltipContent>
               </Tooltip>
-              <Tooltip>
+              <Tooltip delayDuration={50}>
                 <TooltipTrigger asChild>
                   <Button
                     size="icon"
@@ -625,7 +625,7 @@ const MovieDetail = () => {
                   </p>
                 </TooltipContent>
               </Tooltip>
-              <Tooltip>
+              <Tooltip delayDuration={50}>
                 <TooltipTrigger asChild>
                   <Button
                     size="icon"
@@ -650,7 +650,7 @@ const MovieDetail = () => {
                 </TooltipContent>
               </Tooltip>
               {trailer && (
-                <Tooltip>
+                <Tooltip delayDuration={50}>
                   <TooltipTrigger asChild>
                     <Button
                       size="icon"

@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, FilterX, Grid, ListVideo, TrashIcon } from "lucide-react";
+import { CalendarIcon, FilterX, Grid, ListVideo } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import dayjs from "dayjs";
@@ -53,7 +53,7 @@ const MovieListPage = () => {
   const observerRef = useRef(null);
   
   const { isSuccess: isGetMovieGenresSuccess, data: movieGenresData } = useMovieGenresQuery();
-  const [ triggerFilteredMovies, { isLoading: isFilteringMovies, isSuccess: isFilterMoviesSuccess, data: filteredMoviesData }] = useLazyDiscoverMoviesQuery();
+  const [ triggerFilteredMovies, { isLoading: isFilteringMovies, isSuccess: isFilterMoviesSuccess, isError: isFilterMoviesError, data: filteredMoviesData }] = useLazyDiscoverMoviesQuery();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -124,10 +124,10 @@ const MovieListPage = () => {
     }
 
     if (isInfiniteScroll && isInfiniteLoading) {
-      setMovies((prevMovies) => [...prevMovies, ...(filteredMoviesData.data?.results! || [])]);
+      setMovies((prevMovies) => [...prevMovies, ...(filteredMoviesData.data?.results || [])]);
       setIsInfiniteLoading(false);
     } else {
-      setMovies(filteredMoviesData.data?.results! || []);
+      setMovies(filteredMoviesData.data?.results || []);
     }
 
     completeTopBarLoader();
@@ -151,16 +151,6 @@ const MovieListPage = () => {
   }
 
   const handleFilter = () => {
-    console.log('Filter params', {
-      page,
-      sortValue,
-      fromDate: fromDate?.toDateString(),
-      toDate: toDate?.toDateString(),
-      selectedGenres,
-      scoreValues,
-      voteValues,
-    })
-
     if (isInfiniteScroll) {
       setMovies([]);
     }
@@ -201,7 +191,7 @@ const MovieListPage = () => {
   };
 
   const handleLoadMore = () => {
-    if (isInfiniteLoading || currentPage >= (filteredMoviesData?.data?.total_pages! || Number.MAX_SAFE_INTEGER))
+    if (isInfiniteLoading || currentPage >= (filteredMoviesData?.data?.total_pages || Number.MAX_SAFE_INTEGER))
       return;
     setIsInfiniteLoading(true);
     const nextPage = currentPage + 1;
@@ -501,7 +491,9 @@ const MovieListPage = () => {
           {cardViewLayout === CardViewLayout.GRID ? (
             <div className="flex flex-wrap gap-4 justify-center">
               {!isFilteringMovies
-                ? movies.map((movie) => (
+                ? isFilterMoviesError 
+                  ? <div className="text-center text-lg">🥲 An error occurred. Please try again later.</div>
+                  : movies.map((movie) => (
                     <MovieCard
                       key={movie.id}
                       movie={movie}
@@ -517,7 +509,9 @@ const MovieListPage = () => {
           ) : (
             <div className="flex flex-wrap gap-4 justify-center">
               {!isFilteringMovies
-                ? movies.map((movie) => (
+                ? isFilterMoviesError
+                  ? <div className="text-center text-lg">🥲 An error occurred. Please try again later.</div>
+                  : movies.map((movie) => (
                     <MovieCardList
                       key={movie.id}
                       movie={movie}
@@ -542,7 +536,7 @@ const MovieListPage = () => {
               <div className="flex justify-center mt-12">
                 <CustomPagination
                   currentPage={currentPage}
-                  totalPages={filteredMoviesData.data?.total_pages!}
+                  totalPages={filteredMoviesData.data?.total_pages}
                   onPageChange={handlePageChange}
                 />
               </div>
@@ -564,7 +558,7 @@ const MovieListPage = () => {
         </div>
       )}
 
-      {/* <Button
+      <Button
         variant={"secondary"}
         onClick={() => {
           window.scrollTo({
@@ -575,7 +569,7 @@ const MovieListPage = () => {
         className="fixed bottom-4 right-4 z-50 bg-gray-600/80 text-white px-4 py-2 rounded-full shadow-lg transition-all duration-300 hover:bg-blue-800"
       >
         ↑ Back to Top
-      </Button> */}
+      </Button>
     </div>
   );
 }

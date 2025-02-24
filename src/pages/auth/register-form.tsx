@@ -11,7 +11,7 @@ import { Link } from "react-router-dom"
 import { EnvVariable } from "@/configuration/env-variable"
 
 export type  RegisterFormProps = {
-    form: UseFormReturn<z.infer<typeof registerFormSchema>, any, undefined >,
+    form: UseFormReturn<z.infer<typeof registerFormSchema>, unknown, undefined >,
     onSubmit: (values: z.infer<typeof registerFormSchema>) => void,
     isLoading: boolean,
 } & CustomGoogleLoginProps;
@@ -21,12 +21,11 @@ const RegisterForm = (props: RegisterFormProps) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className={`relative max-w-[450px] w-full rounded-xl px-8 py-4 border-white border ${isLoading ? 'pointer-events-none' : ''}`}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={`relative max-w-[450px] w-full rounded-xl px-8 py-4 border-secondary border shadow-xl ${isLoading ? 'pointer-events-none' : ''}`}>
             <p className="text-3xl font-semibold mb-4">Create an account</p>
             <Spinner className="absolute inset-1/2" isOpening={isLoading} />
             <div className={`${isLoading ? 'invisible' : ''}`}>
                 <div>
-                    <p>Register with</p>
                     <div className="w-full flex justify-center">
                         <GoogleOAuthProvider clientId={EnvVariable.GOOGLE_OAUTH_CLIENT_ID}>
                             <CustomGoogleLogin onGoogleAuthSuccess={onGoogleAuthSuccess} onGoogleAuthError={onGoogleAuthError} />

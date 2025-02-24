@@ -1,7 +1,7 @@
-import { User } from "../auth/auth-slice";
 import { apiSlice } from "../base/api-slice";
 import { apiEndpoints } from "../constants";
 import { Response } from "../types/response";
+import { User } from "../types/user.type";
 
 const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => (

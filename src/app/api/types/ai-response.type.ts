@@ -1,4 +1,4 @@
-export const AiOption  = {
+export const AiOption = {
   NAVIGATE: 'Navigate',
   LIST: 'Search',
   NATURAL_TEXT: 'Chat',
