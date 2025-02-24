@@ -198,7 +198,7 @@ const MovieDetail = () => {
     if (!isAuthenticated || selectedRating === 0) {
       return;
     }
-    deleteMovieRating(movie?.id!);
+    deleteMovieRating(movie?.id);
     setSelectedRating(0);
   };
 
@@ -251,7 +251,7 @@ const MovieDetail = () => {
   useEffect(() => {
     if (isGetMovieDataSuccess && movieData) {
       setMovie(movieData.data);
-      setAverageRating(movieData?.data?.vote_average!);
+      setAverageRating(movieData?.data?.vote_average);
       setIsLoading(false);
     }
     if (apiError) {
