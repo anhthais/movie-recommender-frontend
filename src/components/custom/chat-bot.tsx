@@ -39,7 +39,7 @@ export type Message = {
 export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [selectedValue, setSelectedValue] = useState(AiOption.NAVIGATE);
+  const [selectedValue, setSelectedValue] = useState(AiOption.LIST);
   const [
     getAiNavigation,
     {
@@ -246,16 +246,16 @@ export default function Chatbot() {
     <ExpandableChat size="md" position="bottom-right" icon={<Robot />}>
       <ExpandableChatHeader className="bg-muted/60 text-center flex justify-between">
         <div className="flex flex-row items-center space-x-2">
-          <h1 className="text-lg font-semibold">TMDB2 AI </h1>
+          <h1 className="text-lg font-semibold">TMDB2 AI</h1>
           <Select defaultValue={selectedValue} onValueChange={setSelectedValue}>
             <SelectTrigger className="text-xs w-28">
               {selectedValue}
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value={AiOption.LIST}>{AiOption.LIST}</SelectItem>
               <SelectItem value={AiOption.NAVIGATE}>
                 {AiOption.NAVIGATE}
               </SelectItem>
-              <SelectItem value={AiOption.LIST}>{AiOption.LIST}</SelectItem>
             </SelectContent>
           </Select>
         </div>

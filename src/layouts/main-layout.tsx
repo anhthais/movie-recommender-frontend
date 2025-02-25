@@ -87,8 +87,8 @@ export const MainLayout = ({ children}: AuthLayoutProps) => {
                 <nav className="flex flex-row items-center space-x-6">
                   <Logo />
                   <CustomNavLink to="/movie" label="Movies" />
-                  <CustomNavLink to="/" label="Reviews" />
-                  <CustomNavLink to="/" label="Random Picker" />
+                  <CustomNavLink to="/reviews" label="Reviews" />
+                  <CustomNavLink to="/pick-a-movie" label="Random Picker" />
                 </nav>
               ) : (
                 <nav className="flex flex-row items-center space-x-2">
@@ -267,8 +267,8 @@ export const MainLayout = ({ children}: AuthLayoutProps) => {
                     </div>
                     <div className="flex flex-col space-y-3">
                       <CustomNavLink to="/movie" label="Movies" />
-                      <CustomNavLink to="/" label="Reviews" />
-                      <CustomNavLink to="/" label="Random Picker" />
+                      <CustomNavLink to="/reviews" label="Reviews" />
+                      <CustomNavLink to="/pick-a-movie" label="Random Picker" />
                     </div>
                   </div>
                   {isAuthenticated ?? (

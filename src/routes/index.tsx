@@ -20,6 +20,8 @@ const SearchPageLazy = lazy(() => import("../pages/search/search-page"));
 const ReviewListPageLazy = lazy(() => import("../pages/reviews/review-list-page"));
 const RatingListPageLazy = lazy(() => import("../pages/playlist/rating-list-page.tsx"));
 const HomePageLazy = lazy(() => import("../pages/home/home-page.tsx"));
+const ReviewHomePageLazy = lazy(() => import("../pages/reviews/review-home-page.tsx"));
+const PickAMoviePageLazy = lazy(() => import("../pages/pick-a-movie/pick-a-movie-page.tsx"));
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const user = useSelector(getCurrentAuthentication);
@@ -37,34 +39,34 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 export const router = createBrowserRouter([
   {
-      path: "/person",
-      element: (
-        <Suspense fallback={<FallbackScreen />}>
-          <MainLayout>
-            <Outlet />
-          </MainLayout>
-        </Suspense>
-      ),
-      children: [
-        
-        {
-          path: ":person_id",
-          element: (
-            <Suspense fallback={<FallbackScreen />}>
-              <CastDetail/>
-            </Suspense>
-          ),
-        },
-        {
-          path: "",
-          element: (
-            <Suspense fallback={<FallbackScreen />}>
-              {/* <MovieListPage /> */}
-            </Suspense>
-          ),
-        },
-      ],
-    },
+    path: "/person",
+    element: (
+      <Suspense fallback={<FallbackScreen />}>
+        <MainLayout>
+          <Outlet />
+        </MainLayout>
+      </Suspense>
+    ),
+    children: [
+      
+      {
+        path: ":person_id",
+        element: (
+          <Suspense fallback={<FallbackScreen />}>
+            <CastDetail/>
+          </Suspense>
+        ),
+      },
+      {
+        path: "",
+        element: (
+          <Suspense fallback={<FallbackScreen />}>
+            {/* <MovieListPage /> */}
+          </Suspense>
+        ),
+      },
+    ],
+  },
   {
     path: "/movie",
     element: (
@@ -148,6 +150,26 @@ export const router = createBrowserRouter([
         ),
       };
     },
+  },
+  {
+    path: "/reviews",
+    element: (
+      <Suspense fallback={<FallbackScreen />}>
+        <MainLayout>
+          <ReviewHomePageLazy />
+        </MainLayout>
+      </Suspense>
+    )
+  },
+  {
+    path: "pick-a-movie",
+    element: (
+      <Suspense fallback={<FallbackScreen />}>
+        <MainLayout>
+          <PickAMoviePageLazy />
+        </MainLayout>
+      </Suspense>
+    )
   },
   {
     path: "",
