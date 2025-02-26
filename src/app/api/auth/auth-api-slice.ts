@@ -33,6 +33,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
               params: queryArg,
             })
         }),
+        sendActivateEmail: builder.query<void, {}>({
+            query: queryArg => ({
+              url: '/auth/resend-activate-email',
+              method: 'GET',
+              params: queryArg,
+            })
+        }),
         sendResetPassword: builder.query<void, {email: string}>({
           query: queryArg => ({
             url: `/auth/reset-password`,
@@ -60,4 +67,5 @@ export const {
     useLazyActivateAccountQuery,
     useLazySendResetPasswordQuery,
     useResetPasswordMutation,
+    useLazySendActivateEmailQuery,
 } = authApiSlice
